@@ -22,6 +22,7 @@ public class Siakad {
             System.out.println("4. Ganti Dosen Wali");
             System.out.println("5. Tambah Mahasiswa Baru");
             System.out.println("6. Kelola KRS Mahasiswa");
+            System.out.println("7. Absen Dosen");
             System.out.println("0. Keluar");
             System.out.print("Pilih menu: ");
             
@@ -35,6 +36,7 @@ public class Siakad {
                 case 4 -> gantiDosenWali();
                 case 5 -> tambahMahasiswa();
                 case 6 -> kelolaKRS();
+                case 7 -> absenDosen();
                 case 0 -> {
                     System.out.println("ALERT       : Terima kasih!");
                     return;
@@ -42,8 +44,21 @@ public class Siakad {
                 default -> System.out.println("ALERT       : Menu tidak valid!");
             }
         }
+    } 
+
+    static void absenDosen() {
+        System.out.println("\nDaftar Dosen:");
+        for (int i = 0; i < jumlahDosen; i++) {
+            dosens[i].absen();
+        }
     }
 
+    static void inisialisasiDosen() {
+        dosens[0] = new DosenTetap("Danny Aidil", "12345003");
+        dosens[1] = new DosenTetap("Indra", "12345004");
+        dosens[2] = new DosenLB("Siti", "kontrak-001");
+        jumlahDosen = 3;
+    }
 
     static void dataMahasiswa() {
         if (data) return;
@@ -57,7 +72,6 @@ public class Siakad {
         mhs1.sks = 84;
         mhs1.setDosenWali(dosens[0]);
 
-
         try {
             MataKuliah mk1 = new MataKuliah();
             mk1.setKode_matkul("IF101");
@@ -70,16 +84,13 @@ public class Siakad {
             mk2.setnamaMk("Pemrograman Berorientasi Objek");
             mk2.setSks(3);
             mhs1.tambahMataKuliah(mk2);
-        } catch (IllegalArgumentException ignored) {
-         
-        }
+        } catch (IllegalArgumentException ignored) {}
+        
         if (jumlahMahasiswa < mahasiswas.length) mahasiswas[jumlahMahasiswa++] = mhs1;
 
         Mahasiswa mhs2 = new MahasiswaReguler("24552011212", "Aldi alfariz", "Teknik Informatika", 3, 3.43);
         mhs2.nim = "24552011212";
         mhs2.nama = "Aldi alfariz";
-
-        //TODO 3. Tambahkan data baru di object
         mhs2.prodi = "Teknik Informatika";
         mhs2.semester = 3;
         mhs2.ipk = 3.43;
@@ -87,38 +98,9 @@ public class Siakad {
         mhs2.setDosenWali(dosens[1]);
         if (jumlahMahasiswa < mahasiswas.length) mahasiswas[jumlahMahasiswa++] = mhs2;
 
-        //TODO 7. buat object baru dari kelas mahasiswa dengan prodi yang berbeda
-        Mahasiswa mhs3 = new MahasiswaReguler("2310003", "Muhammad Abdulrohim", "Teknik Informatika", 6, 0.0);
-        mhs3.nim = "2310003";
-        mhs3.nama = "Muhammad Abdulrohim";
-        mhs3.prodi = "Teknik Informatika";
-        mhs3.semester = 6;
-        mhs3.ipk = 0.0;
-        mhs3.sks = 95;
-        mhs3.setDosenWali(dosens[1]);
-        if (jumlahMahasiswa < mahasiswas.length) mahasiswas[jumlahMahasiswa++] = mhs3;
-
-        Mahasiswa mhs4 = new MahasiswaReguler("2310004", "Roti pak Slamet", "Teknik Informatika", 8, 4.0);
-        mhs4.nim = "2310004";
-        mhs4.nama = "Roti pak Slamet";
-        mhs4.prodi = "Teknik Informatika";
-        mhs4.semester = 8;
-        mhs4.ipk = 4.0;
-        mhs4.sks = 144;
-        mhs4.setDosenWali(dosens[0]);
-        if (jumlahMahasiswa < mahasiswas.length) mahasiswas[jumlahMahasiswa++] = mhs4;
-
         data = true;
         System.out.println("\nData mahasiswa awal telah dimasukkan.");
     }
-
-
-    static void inisialisasiDosen() {
-        dosens[0] = new DosenTetap("Danny Aidil", "12345003");
-        dosens[1] = new DosenTetap("Indra", "12345004");
-        jumlahDosen = 2;
-    }
-    
 
     static void lihatDaftarMahasiswa() {
         if (jumlahMahasiswa == 0 && !data) {
@@ -131,7 +113,7 @@ public class Siakad {
         }
     }
     
-      static void cariMahasiswa() {
+    static void cariMahasiswa() {
         System.out.print("Masukkan NIM: ");
         String nim = scanner.nextLine();
         
@@ -144,7 +126,7 @@ public class Siakad {
         System.out.println("\nMahasiswa dengan NIM " + nim + " tidak ditemukan.");
     }
     
-      static void hitungRataIPK() {
+    static void hitungRataIPK() {
         if (jumlahMahasiswa == 0) {
             System.out.println("\nBelum ada data mahasiswa.");
             return;
@@ -159,7 +141,7 @@ public class Siakad {
         System.out.printf("\nRata-rata IPK: %.2f\n", rataIPK);
     }
     
-      static void gantiDosenWali() {
+    static void gantiDosenWali() {
         System.out.print("\nMasukkan NIM mahasiswa: ");
         String nim = scanner.nextLine();
         
@@ -193,7 +175,7 @@ public class Siakad {
         System.out.println("\nDosen wali berhasil diubah!");
     }
     
-      static void tambahMahasiswa() {
+    static void tambahMahasiswa() {
         if (jumlahMahasiswa >= mahasiswas.length) {
             System.out.println("\nKapasitas mahasiswa penuh!");
             return;
@@ -202,7 +184,6 @@ public class Siakad {
         System.out.print("NIM: ");
         String nim = scanner.nextLine();
         
-        // Validasi NIM unik
         for (int i = 0; i < jumlahMahasiswa; i++) {
             if (mahasiswas[i].getNim().equals(nim)) {
                 System.out.println("NIM sudah terdaftar!");
@@ -212,7 +193,6 @@ public class Siakad {
 
         System.out.print("Nama: ");
         String nama = scanner.nextLine();
-        
         System.out.print("Program Studi: ");
         String prodi = scanner.nextLine();
         
@@ -229,19 +209,9 @@ public class Siakad {
 
         System.out.print("Semester(1 - 15): ");
         int semester = scanner.nextInt();
-        if (semester < 1 || semester > 15) {
-            System.out.println("Semester tidak valid! Menggunakan semester 1.");
-            semester = 1;
-        }
-
         System.out.print("SKS(0 - 150): ");
         int sks = scanner.nextInt();
-        if (sks < 0 || sks > 150) {
-            System.out.println("SKS tidak valid! Menggunakan SKS 0.");
-            sks = 0;
-        }
         
-        // Pilih dosen wali
         System.out.println("\nPilih Dosen Wali:");
         for (int i = 0; i < jumlahDosen; i++) {
             System.out.println((i+1) + ". " + dosens[i].getNama());
@@ -250,16 +220,13 @@ public class Siakad {
         System.out.print("Pilihan (1-" + jumlahDosen + "): ");
         int pilihan = scanner.nextInt();
         
+        mahasiswas[jumlahMahasiswa] = new MahasiswaReguler(nim, nama, prodi, semester, ipk);
         if (pilihan < 1 || pilihan > jumlahDosen) {
-            System.out.println("Pilihan tidak valid! Menggunakan dosen wali default.");
-            mahasiswas[jumlahMahasiswa] = new MahasiswaReguler(nim, nama, prodi, semester, ipk);
             mahasiswas[jumlahMahasiswa].setDosenWali(dosens[0]);
         } else {
-            mahasiswas[jumlahMahasiswa] = new MahasiswaReguler(nim, nama, prodi, semester, ipk);
             mahasiswas[jumlahMahasiswa].setDosenWali(dosens[pilihan-1]);
         }
 
-        // simpan nilai semester dan sks yang diinput ke objek Mahasiswa
         mahasiswas[jumlahMahasiswa].semester = semester;
         mahasiswas[jumlahMahasiswa].sks = sks;
 
@@ -267,7 +234,6 @@ public class Siakad {
         System.out.println("\n Mahasiswa berhasil ditambahkan!");
     }
     
-    // Menu untuk mengelola KRS mahasiswa
     static void kelolaKRS() {
         if (jumlahMahasiswa == 0 && !data) dataMahasiswa();
 
@@ -310,54 +276,23 @@ public class Siakad {
 
             switch (pilihan) {
                 case 1 -> {
-                    System.out.println("\nDaftar Mata Kuliah Tersedia:");
                     MataKuliah[] daftarMatkul = MataKuliah.getDaftarMataKuliah();
                     for (int i = 0; i < daftarMatkul.length; i++) {
                         MataKuliah mk = daftarMatkul[i];
-                        System.out.printf("%d. %s - %s (%d SKS)\n", 
-                            i + 1, mk.getKode_matkul(), mk.getNamaMk(), mk.getSks());
+                        System.out.printf("%d. %s - %s (%d SKS)\n", i + 1, mk.getKode_matkul(), mk.getNamaMk(), mk.getSks());
                     }
-
-                    System.out.print("\nPilih nomor mata kuliah (1-" + daftarMatkul.length + "): ");
-                    int pilihMk;
-                    try {
-                        pilihMk = scanner.nextInt();
-                        scanner.nextLine(); 
-                        
-                        if (pilihMk < 1 || pilihMk > daftarMatkul.length) {
-                            System.out.println("Pilihan tidak valid!");
-                            break;
-                        }
-
-                        MataKuliah selectedMk = MataKuliah.getMataKuliah(pilihMk - 1);
-                        if (m.hasMataKuliah(selectedMk.getKode_matkul())) {
-                            System.out.println("Mata kuliah " + selectedMk.getKode_matkul() + 
-                                " sudah terdaftar dalam KRS!");
-                            break;
-                        }
-
-                        m.tambahMataKuliah(selectedMk);
-                        System.out.println("\nMata kuliah berhasil ditambahkan ke KRS.");
-                    } catch (Exception e) {
-                        System.out.println("Input tidak valid! Masukkan angka yang sesuai.");
-                        scanner.nextLine(); 
-                    }
-
+                    System.out.print("\nPilih nomor mata kuliah: ");
+                    int pilihMk = scanner.nextInt();
+                    scanner.nextLine();
+                    m.tambahMataKuliah(MataKuliah.getMataKuliah(pilihMk - 1));
                 }
                 case 2 -> {
-                    System.out.print("Masukkan kode mata kuliah yang akan dihapus: ");
-                    String kode = scanner.nextLine();
-                    try {
-                        m.hapusMataKuliah(kode);
-                        System.out.println("\nMata kuliah berhasil dihapus dari KRS.");
-                    } catch (IllegalArgumentException ex) {
-                        System.out.println("Gagal menghapus: " + ex.getMessage());
-                    }
+                    System.out.print("Masukkan kode mata kuliah: ");
+                    m.hapusMataKuliah(scanner.nextLine());
                 }
                 case 3 -> m.tampilKRS();
                 default -> System.out.println("Pilihan tidak valid");
             }
         }
     }
-    
 }

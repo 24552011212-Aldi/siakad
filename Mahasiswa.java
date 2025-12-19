@@ -22,7 +22,7 @@ public abstract class Mahasiswa {
         this.nama = "";
         this.prodi = "";
         this.ipk = 0.0;
-        this.dosenWali = new Dosen("");
+        this.dosenWali = null;
         this.krs = new MataKuliah[0];
         this.jumlahKrs = 0;
         this.umur = 0;
@@ -34,7 +34,7 @@ public abstract class Mahasiswa {
         this.nama = nama;
         this.prodi = prodi;
         this.ipk = ipk;
-        this.dosenWali = new Dosen("");
+        this.dosenWali = null;
         this.krs = new MataKuliah[0];
         this.jumlahKrs = 0;
         this.umur = 0;
@@ -56,8 +56,7 @@ public abstract class Mahasiswa {
     public void setDosenWali(Dosen dosen) {
         this.dosenWali = dosen;
     }
-    
-    // Method untuk menampilkan data lengkap
+  
     abstract void tampilData();
 
     
@@ -140,7 +139,7 @@ public abstract class Mahasiswa {
         return total;
     }
 
-    // Tambah mata kuliah ke KRS (memperluas array secara sederhana)
+    // Tambah mata kuliah ke KRS 
     public void tambahMataKuliah(MataKuliah mk) {
         if (mk == null) throw new IllegalArgumentException("Mata kuliah tidak boleh null");
 
@@ -149,7 +148,7 @@ public abstract class Mahasiswa {
             throw new IllegalArgumentException("Kode mata kuliah tidak boleh kosong");
         }
 
-        // Cek duplikat kode di KRS mahasiswa
+        // duplikat kode di KRS mahasiswa
         if (hasMataKuliah(kode)) {
             throw new IllegalArgumentException("Mata kuliah dengan kode " + kode + " sudah terdaftar!");
         }

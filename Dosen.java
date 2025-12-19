@@ -1,16 +1,16 @@
 
+
 package siakad;
 
-public class Dosen {
+public abstract class Dosen {
     protected String nama;
 
     public Dosen(String nama) {
         this.nama = nama;
     }
 
-    public void absen() {
-        System.out.println("Dosen " + nama + " absen.");
-    }
+
+    public abstract void absen();
 
     public String getNama() {
         return nama;
