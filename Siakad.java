@@ -9,42 +9,68 @@ public class Siakad {
     static int jumlahDosen = 0;
     static boolean data = false;
     static Scanner scanner = new Scanner(System.in);
+
+    //user
+    static User[] users = new User[3];
+    static {
+        users[0] = new SuperAdmin("superadmin");
+        users[1] = new AdminAkademik("adminakademik");
+        users[2] = new AdminDepartemen("admindepartemen");
+    }
     
     public static void main(String[] args) {
-        // Inisialisasi beberapa dosen
         inisialisasiDosen();
-        
-        while (true) {
-            System.out.println("\n=== MENU ===");
-            System.out.println("1. Lihat Daftar Mahasiswa");
-            System.out.println("2. Cari Mahasiswa berdasarkan NIM");
-            System.out.println("3. Hitung Rata-rata IPK");
-            System.out.println("4. Ganti Dosen Wali");
-            System.out.println("5. Tambah Mahasiswa Baru");
-            System.out.println("6. Kelola KRS Mahasiswa");
-            System.out.println("7. Absen Dosen");
-            System.out.println("0. Keluar");
-            System.out.print("Pilih menu: ");
-            
-            int pilihan = scanner.nextInt();
-            scanner.nextLine();
-            
-            switch (pilihan) {
-                case 1 -> lihatDaftarMahasiswa();
-                case 2 -> cariMahasiswa();
-                case 3 -> hitungRataIPK();
-                case 4 -> gantiDosenWali();
-                case 5 -> tambahMahasiswa();
-                case 6 -> kelolaKRS();
-                case 7 -> absenDosen();
-                case 0 -> {
-                    System.out.println("ALERT       : Terima kasih!");
-                    return;
-                }
-                default -> System.out.println("ALERT       : Menu tidak valid!");
-            }
+
+
+        System.out.println("\n=== LOGIN USER ===");
+        System.out.println("Pilih user untuk login:");
+        for (int i = 0; i < users.length; i++) {
+            System.out.println((i+1) + ". " + users[i].getClass().getSimpleName() + " (" + users[i].username + ")");
         }
-    } 
+        System.out.print("Pilihan (1-" + users.length + "): ");
+        int pilihUser = scanner.nextInt();
+        scanner.nextLine();
+        if (pilihUser < 1 || pilihUser > users.length) {
+            System.out.println("User tidak valid, keluar.");
+            return;
+        }
+        User loginUser = users[pilihUser-1];
+        System.out.println("\nLogin sebagai: " + loginUser.getClass().getSimpleName() + " (" + loginUser.username + ")");
+        loginUser.tampilMenu();
+    }
+    
+    static void tampilMenuMahasiswa() {
+                while (true) {
+                System.out.println("\n=== MENU ===");
+                System.out.println("1. Lihat Daftar Mahasiswa");
+                System.out.println("2. Cari Mahasiswa berdasarkan NIM");
+                System.out.println("3. Hitung Rata-rata IPK");
+                System.out.println("4. Ganti Dosen Wali");
+                System.out.println("5. Tambah Mahasiswa Baru");
+                System.out.println("6. Kelola KRS Mahasiswa");
+                System.out.println("7. Absen Dosen");
+                System.out.println("0. Keluar");
+                System.out.print("Pilih menu: ");
+                
+                int pilihan = scanner.nextInt();
+                scanner.nextLine();
+                
+                switch (pilihan) {
+                    case 1 -> lihatDaftarMahasiswa();
+                    case 2 -> cariMahasiswa();
+                    case 3 -> hitungRataIPK();
+                    case 4 -> gantiDosenWali();
+                    case 5 -> tambahMahasiswa();
+                    case 6 -> kelolaKRS();
+                    case 7 -> absenDosen();
+                    case 0 -> {
+                        System.out.println("ALERT       : Terima kasih!");
+                        return;
+                    }
+                    default -> System.out.println("ALERT       : Menu tidak valid!");
+                }
+            }
+        } 
 
     static void absenDosen() {
         System.out.println("\nDaftar Dosen:");

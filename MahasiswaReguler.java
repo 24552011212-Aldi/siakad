@@ -5,11 +5,13 @@ public final class MahasiswaReguler extends Mahasiswa{
 
 
     public MahasiswaReguler(String nim, String nama, String prodi, double ipk, double dosens){
-    super(nim, nama, prodi, dosens);
-    setIdKategoriKelas(IdKategoriKelas);
+        super(nim, nama, prodi, ipk);
+        setIdKategoriKelas(IdKategoriKelas);
     }
 
-    public MahasiswaReguler(String nim, String nama, String prodi, int ipk, double dosens) {
+    public MahasiswaReguler(String nim, String nama, String prodi, int semester, double ipk) {
+        super(nim, nama, prodi, ipk);
+        this.semester = semester;
     }
 
     public int IdKategoriKelas(){
